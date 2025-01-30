@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>진행바 UI</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: left;
+            padding: 20px;
+        }
+        .progress-container {
+            width: 80%;
+            max-width: 500px;
+            background-color: white;
+            border: 2px solid black;
+            border-radius: 5px;
+            overflow: hidden;
+            margin: 10px 0;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background-color: black;
+        }
+        .progress-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            width: 100%;
+            max-width: 550px;
+            margin: 10px 0;
+        }
+        .progress-label {
+            font-size: 14px;
+            margin-left: 10px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <h2>진행바 UI</h2>
+    
+    <div class="progress-wrapper">
+        <div class="progress-container">
+            <div class="progress-bar" id="yearProgress"></div>
+        </div>
+        <span class="progress-label" id="yearLabel">Year: 0%</span>
+    </div>
+    
+    <div class="progress-wrapper">
+        <div class="progress-container">
+            <div class="progress-bar" id="monthProgress"></div>
+        </div>
+        <span class="progress-label" id="monthLabel">Month: 0%</span>
+    </div>
+
+    <script>
+        function updateProgress() {
+            const now = new Date();
+            const startOfYear = new Date(now.getFullYear(), 0, 1);
+            const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+            
+            const yearProgress = ((now - startOfYear) / (new Date(now.getFullYear() + 1, 0, 1) - startOfYear)) * 100;
+            const monthProgress = ((now - startOfMonth) / (new Date(now.getFullYear(), now.getMonth() + 1, 1) - startOfMonth)) * 100;
+            
+            document.getElementById("yearProgress").style.width = yearProgress.toFixed(2) + "%";
+            document.getElementById("yearLabel").textContent = "Year: " + yearProgress.toFixed(0) + "%";
+            
+            document.getElementById("monthProgress").style.width = monthProgress.toFixed(2) + "%";
+            document.getElementById("monthLabel").textContent = "Month: " + monthProgress.toFixed(0) + "%";
+        }
+        
+        updateProgress();
+    </script>
+</body>
+</html>
